@@ -14,7 +14,6 @@ const Navbar = () => {
     position: 'sticky',
     top: 0,
     zIndex: 1000,
-    boxShadow: '0px 0px 10px 0px rgba(255, 255, 255, 1)',
   };
 
   const iconStyle = {
@@ -24,14 +23,13 @@ const Navbar = () => {
   return (
     <AppBar style={appBarStyle}>
       <Toolbar>
-        <CameraIcon sx={{ mr: 2 }} />
         <Typography variant="h4" color="black" noWrap>
           Eden Nagar
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         <IconButton
           component="a"
-          href="https://www.linkedin.com/in/yourusername"
+          href="https://www.linkedin.com/in/edennagar/"
           target="_blank"
           rel="noopener noreferrer"
           style={iconStyle}
@@ -40,7 +38,7 @@ const Navbar = () => {
         </IconButton>
         <IconButton
           component="a"
-          href="https://github.com/yourusername"
+          href="https://github.com/edenagar"
           target="_blank"
           rel="noopener noreferrer"
           style={iconStyle}
