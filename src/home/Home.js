@@ -6,6 +6,7 @@ import Intreduction from './Intreduction'
 import HorizontalTimeline from './Timeline'
 import ProjectGrid from './ProjectGrid'
 import Footer from './Footer'
+import Contribution from './Contribution'
 
 
 const defaultTheme = createTheme();
@@ -17,6 +18,8 @@ const Home = () => {
       <main>
         <Intreduction />
         <HorizontalTimeline />
+        <Contribution />
+        
         <ProjectGrid />
       </main>
       <Footer />
