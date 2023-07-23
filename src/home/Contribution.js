@@ -26,6 +26,7 @@ const Contribution = () => {
   return (
     <Box align="center" sx={{ bgcolor: 'black', pt: 6, pb: 6, color: 'white' }}>
       <GitHubCalendar
+        colorScheme='dark'
         username="edenagar"
         transformData={isSmallScreen ? selectLastHalfYear : undefined}
         labels={isSmallScreen ? {
