@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 
 const projects = [
   {
-    title: 'Sicher Mapping',
-    description: 'Company website.',
-    image: 'https://www.sicher-mapping.com/static/media/sicher_navbar_logo.a4844a22.webp.',
-  },
-  {
     title: 'T:hub Technion',
     description: 'Inovation day Website CRM.',
     image: 'https://scontent-lhr8-2.xx.fbcdn.net/v/t39.30808-1/320481699_1826323404390922_2032634562119185305_n.jpg?stp=dst-jpg_p200x200&_nc_cat=104&ccb=1-7&_nc_sid=c6021c&_nc_ohc=Z2B0j_t06vEAX_X_-qA&_nc_ht=scontent-lhr8-2.xx&oh=00_AfDHWZS8NAQYRhyccXYm_oD5x63sBoJZYo9O8RPRcyqygA&oe=64C24C9B', // Replace with the image path
+  },
+  {
+    title: 'Sicher Mapping',
+    description: 'Company website.',
+    image: 'https://www.sicher-mapping.com/static/media/sicher_navbar_logo.a4844a22.webp',
   },
   {
     title: 'DNA Sequencing Algorithm', 

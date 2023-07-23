@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 const exp = [
     {years: "2019 - 2020", title: "thub-Technion"},
-    {years: "2020 - 2021", title: "freelancer"},
+    {years: "2020 - 2021", title: "Freelancer"},
     {years: "2021 - Present", title: "Wix.com"}
 ]
 
