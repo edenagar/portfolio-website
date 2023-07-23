@@ -3,8 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid'; // Import the Grid component
+import Grid from '@mui/material/Grid';
 
 const Introduction = () => {
   return (
@@ -16,8 +15,8 @@ const Introduction = () => {
       }}
     >
       <Container >
-        <Grid container spacing={2}> {/* Use the Grid container */}
-          <Grid item xs={12} md={6}> {/* First Grid item for text */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h5" align="center" color="white" paragraph>
             Hi! I'm a software developer and esteemed math researcher, specializing in the intricate realm of neural network algorithms.
             </Typography>
@@ -27,10 +26,9 @@ const Introduction = () => {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Contact</Button>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6}> {/* Second Grid item for the additional Box */}
+          <Grid item xs={12} md={6}>
             <Box
               sx={{
 
