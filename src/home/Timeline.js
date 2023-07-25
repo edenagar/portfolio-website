@@ -6,6 +6,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const exp = [
     {years: "2019 - 2020", title: "thub-Technion"},
@@ -15,6 +16,13 @@ const exp = [
 
 const HorizontalTimeline = () => {
   return (
+    <Box
+      sx={{
+        bgcolor: 'white',
+        pt: 8,
+        pb: 6,
+      }}
+    >
     <Timeline position="alternate">
         {exp.map((cur)=> (
             <TimelineItem>
@@ -29,6 +37,7 @@ const HorizontalTimeline = () => {
           </TimelineItem>
         ) )}
     </Timeline>
+    </Box>
   );
 };
 
