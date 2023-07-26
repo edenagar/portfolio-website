@@ -1,4 +1,3 @@
-
 const performCanvasManipulations = (canvasRef) => {
 	if (canvasRef.current) {
 	  const c = canvasRef.current;
@@ -41,8 +40,8 @@ const performCanvasManipulations = (canvasRef) => {
 			depth: 250,
 			focalLength: 250,
 			vanishPoint: {
-				x: w / 2,
-				y: h / 2
+				x: w * 0.80,
+				y: h * 0.70
 			}
 		},
 		
@@ -59,7 +58,6 @@ const performCanvasManipulations = (canvasRef) => {
 		data = [],
 		all = [],
 		tick = 0,
-		totalProb = 0,
 		
 		animating = false,
 		
@@ -343,10 +341,6 @@ function anim(){
 	all.sort( function( a, b ){ return b.screen.z - a.screen.z } );
 	all.map( function( item ){ item.draw(); } );
 	
-	/*ctx.beginPath();
-	ctx.strokeStyle = 'red';
-	ctx.arc( opts.vanishPoint.x, opts.vanishPoint.y, opts.range * opts.focalLength / opts.depth, 0, Tau );
-	ctx.stroke();*/
 }
 
 window.addEventListener( 'resize', function(){
