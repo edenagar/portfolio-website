@@ -16,7 +16,7 @@ const projects = [
     image: 'https://www.sicher-mapping.com/static/media/sicher_navbar_logo.a4844a22.webp',
   },
   {
-    title: 'DNA Sequencing Algorithm', 
+    title: 'DNA Sequencing Algorithm',
     description: 'Under the supervision of Prof. Lamm.',
     image: "https://biology.technion.ac.il/wp-content/themes/BiologyAcc/images/logo-en.png",
   },
@@ -29,34 +29,38 @@ const projects = [
 
 const ProjectGrid = () => {
   return (
-    <Grid container spacing={0}>
-      {projects.map((project, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index} sx={{ width: '100%' }}>
-          <Box
-            sx={{
-              position: 'relative',
-              backgroundImage: `url(${project.image})`,
-              backgroundSize: 'contain',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-              height: '200px',
-              borderRadius: 0,
-              '&:hover': {
-                transform: 'translateY(-5px)',
-                transition: 'transform 0.3s ease',
-              },
-            }}
-          >
-            <Paper elevation={0} sx={{ p: 2, height: '100%', borderRadius: 0, bgcolor: 'rgba(255, 255, 255, 0.8)' }}>
-              <Typography variant="h6" gutterBottom>
-                {project.title}
-              </Typography>
-              <Typography variant="body1">{project.description}</Typography>
-            </Paper>
-          </Box>
-        </Grid>
-      ))}
-    </Grid>
+    <Box sx={{
+      bgcolor: 'white',
+    }}>
+      <Grid container spacing={0}>
+        {projects.map((project, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index} sx={{ width: '100%' }}>
+            <Box
+              sx={{
+                position: 'relative',
+                backgroundImage: `url(${project.image})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                height: '200px',
+                borderRadius: 0,
+                '&:hover': {
+                  transform: 'translateY(-5px)',
+                  transition: 'transform 0.3s ease',
+                },
+              }}
+            >
+              <Paper elevation={0} sx={{ p: 2, height: '100%', borderRadius: 0, bgcolor: 'rgba(255, 255, 255, 0.8)' }}>
+                <Typography variant="h6" gutterBottom>
+                  {project.title}
+                </Typography>
+                <Typography variant="body1">{project.description}</Typography>
+              </Paper>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 

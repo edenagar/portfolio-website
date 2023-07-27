@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 const exp = [
-    {years: "2019 - 2020", title: "thub-Technion"},
-    {years: "2020 - 2021", title: "Freelancer"},
-    {years: "2021 - Present", title: "Wix.com"}
+  { years: "2019 - 2020", title: "thub-Technion" },
+  { years: "2020 - 2021", title: "Freelancer" },
+  { years: "2021 - Present", title: "Wix.com" }
 ]
 
 const HorizontalTimeline = () => {
@@ -19,13 +19,13 @@ const HorizontalTimeline = () => {
     <Box
       sx={{
         bgcolor: 'white',
-        pt: 8,
+        pt: { xs: 4, md: 8 },
         pb: 6,
       }}
     >
-    <Timeline position="alternate">
-        {exp.map((cur)=> (
-            <TimelineItem>
+      <Timeline position="alternate">
+        {exp.map((cur) => (
+          <TimelineItem>
             <TimelineSeparator>
               <TimelineDot variant="outlined" color="primary" />
               <TimelineConnector />
@@ -35,8 +35,8 @@ const HorizontalTimeline = () => {
               <Typography>{cur.title}</Typography>
             </TimelineContent>
           </TimelineItem>
-        ) )}
-    </Timeline>
+        ))}
+      </Timeline>
     </Box>
   );
 };
