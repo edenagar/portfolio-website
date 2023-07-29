@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import './index.css';
 import Home from './pages/home/Home';
+import Chess from './pages/chess/Chess';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -13,6 +14,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/chess",
+    element: <Chess />,
+  },
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
