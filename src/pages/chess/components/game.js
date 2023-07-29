@@ -5,6 +5,8 @@ import Board from './board.js';
 import King from '../pieces/king'
 import FallenSoldierBlock from './fallen-soldier-block.js';
 import initialiseChessBoard from '../helpers/board-initialiser.js';
+import aiService from '../../../services/chessService'
+
 
 export default class Game extends React.Component {
   constructor() {
@@ -20,29 +22,59 @@ export default class Game extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.player === 2) {
+      this.makeAiMove();
+    }
+  }
+
+  async makeAiMove() {
+    const { squares } = this.state;
+    const bestMove = await aiService.getBestMove(squares);
+
+    if (!bestMove) {
+      this.setState({ status: 'Game over. AI cannot make a move.' });
+      return;
+    }
+
+    const { source, destination } = bestMove;
+    this.handleMove(source, destination);
+  } catch(error) {
+    this.setState({ status: 'Error communicating with AI server.' });
+
+  }
+
   handleClick(i) {
+    if (this.state.player === 2) {
+      return;
+    }
+
+    this.handleMove(this.state.sourceSelection, i);
+  }
+
+  handleMove(sourceSelection, destinationSelection) {
     const squares = [...this.state.squares];
 
-    if (this.state.sourceSelection === -1) {
-      if (!squares[i] || squares[i].player !== this.state.player) {
+    if (sourceSelection === -1) {
+      if (!squares[destinationSelection] || squares[destinationSelection].player !== this.state.player) {
         this.setState({ status: "Wrong selection. Choose player " + this.state.player + " pieces." });
-        if (squares[i]) {
-          squares[i].style = { ...squares[i].style, backgroundColor: "" };
+        if (squares[destinationSelection]) {
+          squares[destinationSelection].style = { ...squares[destinationSelection].style, backgroundColor: "" };
         }
       }
       else {
-        squares[i].style = { ...squares[i].style, backgroundColor: "RGB(111,143,114)" }; // Emerald from http://omgchess.blogspot.com/2015/09/chess-board-color-schemes.html
+        squares[destinationSelection].style = { ...squares[destinationSelection].style, backgroundColor: "RGB(111,143,114)" };
         this.setState({
           status: "Choose destination for the selected piece",
-          sourceSelection: i
+          sourceSelection: destinationSelection
         })
       }
       return
     }
 
-    squares[this.state.sourceSelection].style = { ...squares[this.state.sourceSelection].style, backgroundColor: "" };
+    squares[sourceSelection].style = { ...squares[sourceSelection].style, backgroundColor: "" };
 
-    if (squares[i] && squares[i].player === this.state.player) {
+    if (squares[destinationSelection] && squares[destinationSelection].player === this.state.player) {
       this.setState({
         status: "Wrong selection. Choose valid source and destination again.",
         sourceSelection: -1,
@@ -52,21 +84,21 @@ export default class Game extends React.Component {
 
       const whiteFallenSoldiers = [];
       const blackFallenSoldiers = [];
-      const isDestEnemyOccupied = Boolean(squares[i]);
-      const isMovePossible = squares[this.state.sourceSelection].isMovePossible(this.state.sourceSelection, i, isDestEnemyOccupied);
+      const isDestEnemyOccupied = Boolean(squares[destinationSelection]);
+      const isMovePossible = squares[sourceSelection].isMovePossible(sourceSelection, destinationSelection, isDestEnemyOccupied);
 
       if (isMovePossible) {
-        if (squares[i] !== null) {
-          if (squares[i].player === 1) {
-            whiteFallenSoldiers.push(squares[i]);
+        if (squares[destinationSelection] !== null) {
+          if (squares[destinationSelection].player === 1) {
+            whiteFallenSoldiers.push(squares[destinationSelection]);
           }
           else {
-            blackFallenSoldiers.push(squares[i]);
+            blackFallenSoldiers.push(squares[destinationSelection]);
           }
         }
 
-        squares[i] = squares[this.state.sourceSelection];
-        squares[this.state.sourceSelection] = null;
+        squares[destinationSelection] = squares[sourceSelection];
+        squares[sourceSelection] = null;
 
         const isCheckMe = this.isCheckForPlayer(squares, this.state.player)
 
@@ -99,13 +131,14 @@ export default class Game extends React.Component {
     }
   }
 
+
   getKingPosition(squares, player) {
     return squares.reduce((acc, curr, i) =>
-      acc || //King may be only one, if we had found it, returned his position
-      ((curr //current squre mustn't be a null
-        && (curr.getPlayer() === player)) //we are looking for aspecial king 
+      acc ||
+      ((curr
+        && (curr.getPlayer() === player))
         && (curr instanceof King)
-        && i), // returned position if all conditions are completed
+        && i),
       null)
   }
 
@@ -121,6 +154,7 @@ export default class Game extends React.Component {
         && true),
       false)
   }
+
 
   render() {
 
