@@ -24,14 +24,14 @@ const Contribution = () => {
   const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   return (
-    <Box align="center" sx={{ bgcolor: 'black', pt: 6, pb: 6, color: 'white' }}>
+    <Box align="center" sx={{ bgcolor: 'black', pt: 6, pb: 6, pr: 2, pl: 2, color: 'white' }}>
       <GitHubCalendar
         colorScheme='dark'
         username="edenagar"
         transformData={isSmallScreen ? selectLastHalfYear : undefined}
         labels={isSmallScreen ? {
-            totalCount: '{{count}} contributions in the last half year',
-          } : undefined}
+          totalCount: '{{count}} contributions in the last half year',
+        } : undefined}
         hideColorLegend
       />
     </Box>
