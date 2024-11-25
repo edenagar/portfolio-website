@@ -9,9 +9,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 const exp = [
-  { years: "2019 - 2020", title: "thub-Technion" },
+  { years: "2021 - Present", title: "Teaching Assistant for “Introduction to Machine Learning“ at the Tehcnion" },
+  { years: "2021 - 2023", title: "Wix.com" },
   { years: "2020 - 2021", title: "Freelancer" },
-  { years: "2021 - Present", title: "Wix.com" }
+  { years: "2019 - 2020", title: "thub-Technion" },
 ]
 
 const HorizontalTimeline = () => {

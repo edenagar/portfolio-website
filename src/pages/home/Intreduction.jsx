@@ -41,7 +41,7 @@ const Introduction = () => {
           />
           <Grid item xs={12} md={6}>
             <Typography variant="h5" paragraph>
-              Hi! I'm a software developer and esteemed math researcher, specializing in the intricate realm of neural network algorithms.
+              Hi! I'm a software developer and esteemed math researcher, specializing in the intricate realm of deep learning on graphs.
             </Typography>
           </Grid>
         </Grid>

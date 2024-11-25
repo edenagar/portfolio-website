@@ -21,12 +21,12 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 
 				dataToConnections: 1,
 				baseSpeed: .04,
-				addedSpeed: .05,
+				addedSpeed: .02,
 				baseGlowSpeed: .4,
 				addedGlowSpeed: .4,
 
-				rotVelX: .003,
-				rotVelY: .002,
+				rotVelX: .0015,
+				rotVelY: .001,
 
 				repaintColor: '#111',
 				connectionColor: 'hsla(200,60%,light%,alp)',
