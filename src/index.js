@@ -6,17 +6,12 @@ import {
 } from "react-router-dom";
 import './index.css';
 import Home from './pages/home/Home';
-import Chess from './pages/chess/Chess';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
   {
     path: "/portfolio-website/",
     element: <Home />,
-  },
-  {
-    path: "/portfolio-website/chess",
-    element: <Chess />,
   },
 
 ]);
