@@ -75,7 +75,7 @@ const Home = () => {
           width: '100%',
           height: '100%',
           zIndex: -1,
-          opacity: 0.8,
+          opacity: isSmallScreen ? 0.5 : 0.8,
         }}
       />
       <Navbar />
