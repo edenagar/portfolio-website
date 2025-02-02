@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Introduction from './Introduction';
+import Introduction from './Intreduction';
 import Timeline from './Timeline';
 import Navbar from '../../layouts/Navbar'
 import Footer from '../../layouts/Footer'
