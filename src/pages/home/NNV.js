@@ -1,4 +1,4 @@
-const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter = 0.80) => {
+const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter = 0.80, sizeMultiplier = 0.8) => {
 	if (canvasRef.current) {
 		const c = canvasRef.current;
 		var w = c.width = window.innerWidth,
@@ -6,37 +6,31 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			ctx = c.getContext('2d'),
 
 			opts = {
-
-				range: 180,
-				baseConnections: 3,
-				addedConnections: 5,
-				baseSize: 5,
-				minSize: 1,
+				range: 280 * sizeMultiplier,
+				baseConnections: 4,
+				addedConnections: 7,
+				baseSize: 8 * sizeMultiplier,
+				minSize: 2 * sizeMultiplier,
 				dataToConnectionSize: .4,
 				sizeMultiplier: .7,
-				allowedDist: 40,
-				baseDist: 40,
-				addedDist: 30,
+				allowedDist: 60 * sizeMultiplier,
+				baseDist: 60 * sizeMultiplier,
+				addedDist: 45 * sizeMultiplier,
 				connectionAttempts: 100,
-
 				dataToConnections: 1,
 				baseSpeed: .04,
 				addedSpeed: .02,
 				baseGlowSpeed: .4,
 				addedGlowSpeed: .4,
-
 				rotVelX: .0015,
 				rotVelY: .001,
-
 				repaintColor: '#111',
 				connectionColor: 'hsla(200,60%,light%,alp)',
 				rootColor: 'hsla(0,60%,light%,alp)',
 				endColor: 'hsla(160,20%,light%,alp)',
 				dataColor: 'hsla(40,80%,light%,alp)',
-
 				wireframeWidth: .1,
 				wireframeColor: '#88f',
-
 				depth: 250,
 				focalLength: 250,
 				vanishPoint: {
@@ -143,14 +137,15 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 
 					passedExisting = true;
 					passedBuffered = true;
-					for (var i = 0; i < connections.length; ++i)
+					for (let i = 0; i < connections.length; ++i)
 						if (squareDist(pos, connections[i]) < squareAllowed)
 							passedExisting = false;
 
-					if (passedExisting)
-						for (var i = 0; i < links.length; ++i)
-							if (squareDist(pos, links[i]) < squareAllowed)
+					if (passedExisting) {
+						for (let j = 0; j < links.length; ++j)
+							if (squareDist(pos, links[j]) < squareAllowed)
 								passedBuffered = false;
+					}
 
 					if (passedExisting && passedBuffered)
 						links.push({ x: pos.x, y: pos.y, z: pos.z });
@@ -162,16 +157,15 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			if (links.length === 0)
 				this.isEnd = true;
 			else {
-				for (var i = 0; i < links.length; ++i) {
-
-					var pos = links[i],
-						connection = new Connection(pos.x, pos.y, pos.z, this.size * opts.sizeMultiplier);
+				for (let i = 0; i < links.length; ++i) {
+					const newPos = links[i],
+						connection = new Connection(newPos.x, newPos.y, newPos.z, this.size * opts.sizeMultiplier);
 
 					this.links[i] = connection;
 					all.push(connection);
 					connections.push(connection);
 				}
-				for (var i = 0; i < this.links.length; ++i)
+				for (let i = 0; i < this.links.length; ++i)
 					toDevelop.push(this.links[i]);
 			}
 		}
@@ -335,11 +329,17 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			ctx.beginPath();
 			ctx.lineWidth = opts.wireframeWidth;
 			ctx.strokeStyle = opts.wireframeColor;
-			all.map(function (item) { item.step(); });
+			all.map(function (item) {
+				item.step();
+				return item;
+			});
 			ctx.stroke();
 			ctx.globalCompositeOperation = 'source-over';
 			all.sort(function (a, b) { return b.screen.z - a.screen.z });
-			all.map(function (item) { item.draw(); });
+			all.map(function (item) {
+				item.draw();
+				return item;
+			});
 
 		}
 

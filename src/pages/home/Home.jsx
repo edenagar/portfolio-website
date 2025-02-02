@@ -2,12 +2,11 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Intreduction from './Intreduction'
+import Skills from './Skills'
 import HorizontalTimeline from './Timeline'
 import ProjectGrid from './ProjectGrid'
 import Navbar from '../../layouts/Navbar'
 import Footer from '../../layouts/Footer'
-import Contribution from './Contribution'
-
 
 const defaultTheme = createTheme();
 const Home = () => {
@@ -17,8 +16,8 @@ const Home = () => {
       <Navbar />
       <main>
         <Intreduction />
+        <Skills />
         <HorizontalTimeline />
-        <Contribution />
         <ProjectGrid />
       </main>
       <Footer />
