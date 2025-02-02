@@ -18,16 +18,16 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 				addedDist: 45 * sizeMultiplier,
 				connectionAttempts: 100,
 				dataToConnections: 1,
-				baseSpeed: .04,
-				addedSpeed: .02,
+				baseSpeed: .02,
+				addedSpeed: .01,
 				baseGlowSpeed: .4,
 				addedGlowSpeed: .4,
-				rotVelX: .0015,
-				rotVelY: .001,
+				rotVelX: .0008,
+				rotVelY: .0005,
 				repaintColor: '#111',
-				connectionColor: 'hsla(200,60%,light%,alp)',
+				connectionColor: 'hsla(249,60%,light%,alp)',
 				rootColor: 'hsla(0,60%,light%,alp)',
-				endColor: 'hsla(160,20%,light%,alp)',
+				endColor: 'hsla(285 ,70%,light%,alp)',
 				dataColor: 'hsla(40,80%,light%,alp)',
 				wireframeWidth: .1,
 				wireframeColor: '#88f',
@@ -189,10 +189,22 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			}
 		}
 		Connection.prototype.draw = function () {
+			if (!isFinite(this.screen.x) || !isFinite(this.screen.y) ||
+				!isFinite(this.screen.scale) || !isFinite(this.size) ||
+				this.screen.scale * this.size <= 0) {
+				return;
+			}
+
 			ctx.fillStyle = this.screen.color;
 			ctx.beginPath();
-			ctx.arc(this.screen.x, this.screen.y, this.screen.scale * this.size, 0, Tau);
-			ctx.fill();
+			try {
+				ctx.arc(this.screen.x, this.screen.y,
+					Math.min(100, this.screen.scale * this.size),
+					0, Tau);
+				ctx.fill();
+			} catch (e) {
+				console.warn('Drawing error prevented:', e);
+			}
 		}
 		function Data(connection) {
 
@@ -227,16 +239,25 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 
 		}
 		Data.prototype.draw = function () {
-
 			if (this.ended)
-				return --this.ended; // not sre why the thing lasts 2 frames, but it does
+				return --this.ended;
+
+			if (!isFinite(this.screen.x) || !isFinite(this.screen.y) ||
+				!isFinite(this.screen.lastX) || !isFinite(this.screen.lastY) ||
+				!isFinite(this.screen.scale) || !isFinite(this.size)) {
+				return;
+			}
 
 			ctx.beginPath();
 			ctx.strokeStyle = this.screen.color;
-			ctx.lineWidth = this.size * this.screen.scale;
-			ctx.moveTo(this.screen.lastX, this.screen.lastY);
-			ctx.lineTo(this.screen.x, this.screen.y);
-			ctx.stroke();
+			ctx.lineWidth = Math.min(100, this.size * this.screen.scale);
+			try {
+				ctx.moveTo(this.screen.lastX, this.screen.lastY);
+				ctx.lineTo(this.screen.x, this.screen.y);
+				ctx.stroke();
+			} catch (e) {
+				console.warn('Drawing error prevented:', e);
+			}
 		}
 		Data.prototype.setConnection = function (connection) {
 
@@ -353,4 +374,4 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 	}
 };
 
-export default performCanvasManipulations;
+export { performCanvasManipulations };
