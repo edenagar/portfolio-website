@@ -9,6 +9,7 @@ import Navbar from '../../layouts/Navbar'
 import Footer from '../../layouts/Footer'
 import CssBaseline from '@mui/material/CssBaseline';
 import { performCanvasManipulations } from './NNV';
+import Box from '@mui/material/Box';
 
 
 const defaultTheme = createTheme({
@@ -78,21 +79,36 @@ const Home = () => {
           opacity: isSmallScreen ? 0.5 : 0.8,
         }}
       />
-      <Navbar />
-      <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          {/* Introduction section */}
-          <Grid item xs={12}>
-            <Introduction />
-          </Grid>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh', // Ensure the container takes at least the full viewport height
+        }}
+      >
+        <Navbar />
+        <Container
+          maxWidth="lg"
+          sx={{
+            flex: '1 0 auto', // This allows the container to grow and take available space
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Grid container spacing={4}>
+            {/* Introduction section */}
+            <Grid item xs={12}>
+              <Introduction />
+            </Grid>
 
-          {/* Timeline section */}
-          <Grid item xs={12}>
-            <Timeline />
+            {/* Timeline section */}
+            <Grid item xs={12}>
+              <Timeline />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-      <Footer />
+        </Container>
+        <Footer />
+      </Box>
     </ThemeProvider>
   );
 };

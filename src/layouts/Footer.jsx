@@ -7,7 +7,14 @@ const Footer = () => {
   const email = 'nagar.eden6@gmail.com';
 
   return (
-    <Box sx={{ bgcolor: 'black', p: 3 }} component="footer">
+    <Box
+      sx={{
+        bgcolor: 'black',
+        p: 3,
+        mt: 'auto'
+      }}
+      component="footer"
+    >
       <Typography variant="h6" align="center" gutterBottom color="white">
         Feel free to contact me for any questions, send me an email at{' '}
         <Link href={`mailto:${email}`} color="inherit">
