@@ -1,6 +1,6 @@
 import React from 'react';
 import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
@@ -56,7 +56,16 @@ const HorizontalTimeline = () => {
           <Typography variant="h5" sx={{ color: 'white', mb: 2, mt: sectionIndex > 0 ? 4 : 0 }}>
             {section.category}
           </Typography>
-          <Timeline position="alternate">
+          <Timeline
+            sx={(theme) => ({
+              position: 'left',
+              [theme.breakpoints.down('sm')]: { position: 'left', flex: 0, padding: 0 },
+              [`& .${timelineItemClasses.root}:before`]: {
+                flex: 0,
+                padding: 0
+              }
+            })}
+          >
             {section.items.map((item, index) => (
               <TimelineItem key={index}>
                 <TimelineSeparator>
