@@ -7,6 +7,7 @@ import {
 import './index.css';
 import Home from './pages/home/Home';
 import Chess from './pages/chess/Chess';
+import Microblog from './pages/microblog/Microblog';
 import MainLayout from './layouts/MainLayout';
 
 const router = createHashRouter([
@@ -20,6 +21,10 @@ const router = createHashRouter([
       {
         path: "/chess",
         element: <Chess />,
+      },
+      {
+        path: "/microblog",
+        element: <Microblog />,
       },
     ]
   }
