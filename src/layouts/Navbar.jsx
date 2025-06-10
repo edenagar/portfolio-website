@@ -4,8 +4,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +34,13 @@ const Navbar = () => {
     transition: 'background-color 0.3s, backdrop-filter 0.3s',
   };
 
+  const linkStyle = {
+    color: isScrolled ? 'white' : 'black',
+    transition: 'color 0.3s',
+    textTransform: 'none',
+    marginRight: '16px',
+  };
+
   const iconStyle = {
     color: isScrolled ? 'white' : 'black',
     transition: 'color 0.3s',
@@ -45,12 +54,22 @@ const Navbar = () => {
           sx={{
             color: isScrolled ? 'white' : 'black',
             transition: 'color 0.3s',
+            marginRight: 'auto',
           }}
           noWrap
+          component={RouterLink}
+          to="/"
+          style={{ textDecoration: 'none' }}
         >
           Eden Nagar
         </Typography>
-        <Box sx={{ flexGrow: 1 }} />
+        {/* <Button
+          component={RouterLink}
+          to="/chess"
+          style={linkStyle}
+        >
+          Chess
+        </Button> */}
         <IconButton
           component="a"
           href="https://www.linkedin.com/in/edennagar/"

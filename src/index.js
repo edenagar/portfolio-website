@@ -6,12 +6,23 @@ import {
 } from "react-router-dom";
 import './index.css';
 import Home from './pages/home/Home';
+import Chess from './pages/chess/Chess';
+import MainLayout from './layouts/MainLayout';
 
 const router = createHashRouter([
   {
-    path: "/",
-    element: <Home />,
-  },
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/chess",
+        element: <Chess />,
+      },
+    ]
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
