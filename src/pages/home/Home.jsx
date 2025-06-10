@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import Introduction from './Intreduction';
+import Introduction from './Introduction';
 import Timeline from './Timeline';
 import { performCanvasManipulations } from './NNV';
 
