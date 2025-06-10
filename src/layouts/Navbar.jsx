@@ -70,6 +70,13 @@ const Navbar = () => {
         >
           Chess
         </Button> */}
+        <Button
+          component={RouterLink}
+          to="/microblog"
+          style={linkStyle}
+        >
+          Microblog
+        </Button>
         <IconButton
           component="a"
           href="https://www.linkedin.com/in/edennagar/"

@@ -68,3 +68,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Microblog
+
+Short posts can be added to `src/content/microblog.json`. Each entry uses the following format:
+
+```
+{
+  "date": "YYYY-MM-DD",
+  "text": "Brief thought or commentary.",
+  "image": "/images/your-image.png" // optional
+}
+```
+
+Images referenced in the JSON should be placed in `public/images/`.
+
