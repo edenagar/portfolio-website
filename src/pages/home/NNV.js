@@ -53,7 +53,8 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			all = [],
 			tick = 0,
 
-			animating = false,
+                        animating = false,
+                        animationFrameId = null,
 
 			Tau = Math.PI * 2;
 
@@ -322,9 +323,9 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			return x * x + y * y + z * z;
 		}
 
-		function anim() {
+                function anim() {
 
-			window.requestAnimationFrame(anim);
+                        animationFrameId = window.requestAnimationFrame(anim);
 
 			ctx.globalCompositeOperation = 'source-over';
 			ctx.fillStyle = opts.repaintColor;
@@ -364,14 +365,28 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 
 		}
 
-		window.addEventListener('resize', function () {
 
-			opts.vanishPoint.x = (w = c.width = window.innerWidth) / 2;
-			opts.vanishPoint.y = (h = c.height = window.innerHeight) / 2;
-			ctx.fillRect(0, 0, w, h);
-		});
-		window.addEventListener('click', init);
-	}
+                const handleResize = function () {
+
+                        opts.vanishPoint.x = (w = c.width = window.innerWidth) / 2;
+                        opts.vanishPoint.y = (h = c.height = window.innerHeight) / 2;
+                        ctx.fillRect(0, 0, w, h);
+                };
+                window.addEventListener('resize', handleResize);
+                window.addEventListener('click', init);
+
+                return {
+                        cleanup: () => {
+                                window.removeEventListener('resize', handleResize);
+                                window.removeEventListener('click', init);
+                                if (animationFrameId) {
+                                        cancelAnimationFrame(animationFrameId);
+                                        animationFrameId = null;
+                                }
+                                animating = false;
+                        }
+                };
+        }
 };
 
 export { performCanvasManipulations };
