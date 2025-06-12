@@ -2,7 +2,7 @@
   {
     "date": "2025-06-11",
     "text": "Just kicked off a new project: building a Chess AI microservice with Node.js & Express! ♟️ The goal is a secure, reusable engine for any app. So far, I've set up the core API with JWT authentication and built a React/TS testbed using chessboard.js. Integrating the classic library with a modern stack was a fun challenge, but now I have a solid foundation. Next up: giving the AI a real brain! #Chess #AI #Microservices #NodeJS #React #DevLog",
-    "image": "images/chess_board_react.png"
+    "image": "/images/chess_board_react.png"
   },
   {
     "date": "2025-06-10",
