@@ -24,7 +24,7 @@ const Microblog = () => {
                 component="img"
                 src={resolveImagePath(post.image)}
                 alt=""
-                sx={{ width: '100%', height: 'auto', mb: 1 }}
+                sx={{ width: '30%', height: 'auto', mb: 1, display: 'block', mx: 'auto' }}
               />
             )}
             <Typography variant="caption" sx={{ color: 'gray' }}>
