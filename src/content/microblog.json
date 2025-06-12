@@ -1,10 +1,11 @@
 [
   {
-    "date": "2025-06-10",
-    "text": "Today I read an article on diffusion models and their potential applications in image generation."
+    "date": "2025-06-11",
+    "text": "Just kicked off a new project: building a Chess AI microservice with Node.js & Express! ♟️ The goal is a secure, reusable engine for any app. So far, I've set up the core API with JWT authentication and built a React/TS testbed using chessboard.js. Integrating the classic library with a modern stack was a fun challenge, but now I have a solid foundation. Next up: giving the AI a real brain! #Chess #AI #Microservices #NodeJS #React #DevLog",
+    "image": "images/chess_board_react.png"
   },
   {
-    "date": "2025-06-11",
-    "text": "Explored the new React features; excited about server components!"
+    "date": "2025-06-10",
+    "text": "Built a simple microblog using React and Material UI! Features a clean dark theme, responsive cards for posts, and easy JSON-based content management. Perfect for quick updates and sharing thoughts. Looking forward to adding images and other features."
   }
 ]
