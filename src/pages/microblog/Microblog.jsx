@@ -7,6 +7,9 @@ import Box from '@mui/material/Box';
 
 import posts from '../../content/microblog.json';
 
+const resolveImagePath = (path) =>
+  path && path.startsWith('/') ? `${process.env.PUBLIC_URL}${path}` : path;
+
 const Microblog = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -19,7 +22,7 @@ const Microblog = () => {
             {post.image && (
               <Box
                 component="img"
-                src={post.image}
+                src={resolveImagePath(post.image)}
                 alt=""
                 sx={{ width: '100%', height: 'auto', mb: 1 }}
               />
