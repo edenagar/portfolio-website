@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebGPU Chat POC</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" />
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module">
+    // Import React and MUI from CDN as ES modules
+    import React, { useState, useEffect, useRef } from 'https://esm.sh/react@18';
+    import { createRoot } from 'https://esm.sh/react-dom@18/client';
+    import { Paper, Box, Typography, TextField, IconButton, CircularProgress } from 'https://esm.sh/@mui/material@5';
+    import SendIcon from 'https://esm.sh/@mui/icons-material@5/Send';
+    import * as webllm from 'https://esm.sh/@mlc-ai/web-llm@0';
+
+    // System prompt with empty knowledge base placeholder
+    const SYSTEM_PROMPT = {
+      role: 'system',
+      content: 'You are a helpful assistant.',
+      knowledgeBase: ''
+    };
+
+    function ChatWidget() {
+      // Do not render if WebGPU is unavailable
+      if (!navigator.gpu) return null;
+
+      const [engine, setEngine] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [input, setInput] = useState('');
+      const [messages, setMessages] = useState([]);
+      const listRef = useRef(null);
+
+      // Load model once on mount
+      useEffect(() => {
+        const eng = new webllm.MLCEngine();
+        eng.reload('qwen2-0.5b-instruct-q4f16_1-1k').then(() => {
+          setEngine(eng);
+          setLoading(false);
+        });
+      }, []);
+
+      // Scroll to bottom as messages update
+      useEffect(() => {
+        const el = listRef.current;
+        if (el) el.scrollTop = el.scrollHeight;
+      }, [messages]);
+
+      async function send() {
+        if (!input.trim() || !engine) return;
+        const userMsg = { role: 'user', content: input.trim() };
+        const updated = [...messages, userMsg];
+        setMessages([...updated, { role: 'assistant', content: '' }]);
+        setInput('');
+        let assistant = '';
+        const completion = await engine.chat.completions.create({
+          stream: true,
+          messages: [SYSTEM_PROMPT, ...updated]
+        });
+        for await (const chunk of completion) {
+          const delta = chunk.choices[0]?.delta?.content || '';
+          if (delta) assistant += delta;
+          setMessages(m => {
+            const arr = [...m];
+            arr[arr.length - 1] = { role: 'assistant', content: assistant };
+            return arr;
+          });
+        }
+      }
+
+      return (
+        <Paper elevation={4} sx={{ position: 'fixed', bottom: 16, right: 16, width: 320, height: 420, display: 'flex', flexDirection: 'column', borderRadius: 2 }}>
+          {loading && (
+            <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(255,255,255,0.6)', zIndex: 1 }}>
+              <CircularProgress />
+            </Box>
+          )}
+          <Box ref={listRef} sx={{ flex: 1, overflowY: 'auto', p: 1 }}>
+            {messages.map((m, i) => (
+              <Typography key={i} sx={{ mb: 1, color: m.role === 'user' ? 'primary.main' : 'text.primary' }}>
+                {m.content}
+              </Typography>
+            ))}
+          </Box>
+          <Box sx={{ display: 'flex', p: 1, borderTop: 1, borderColor: 'divider' }}>
+            <TextField size="small" fullWidth value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') send(); }} />
+            <IconButton onClick={send} disabled={!input.trim() || loading} sx={{ ml: 1 }}>
+              <SendIcon />
+            </IconButton>
+          </Box>
+        </Paper>
+      );
+    }
+
+    createRoot(document.getElementById('root')).render(<ChatWidget />);
+  </script>
+</body>
+</html>
