@@ -20,8 +20,8 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 				dataToConnections: 1,
 				baseSpeed: .02,
 				addedSpeed: .01,
-				baseGlowSpeed: .4,
-				addedGlowSpeed: .4,
+				baseGlowSpeed: .05,
+				addedGlowSpeed: .05,
 				rotVelX: .0008,
 				rotVelY: .0005,
 				repaintColor: '#111',
@@ -53,8 +53,8 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			all = [],
 			tick = 0,
 
-                        animating = false,
-                        animationFrameId = null,
+			animating = false,
+			animationFrameId = null,
 
 			Tau = Math.PI * 2;
 
@@ -173,7 +173,8 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 		Connection.prototype.step = function () {
 
 			this.setScreen();
-			this.screen.color = (this.isEnd ? opts.endColor : opts.connectionColor).replace('light', 30 + ((tick * this.glowSpeed) % 30)).replace('alp', .2 + (1 - this.screen.z / mostDistant) * .8);
+			var glowIntensity = 50 + 30 * (0.5 + 0.5 * Math.sin(tick * this.glowSpeed));
+			this.screen.color = (this.isEnd ? opts.endColor : opts.connectionColor).replace('light', glowIntensity).replace('alp', .2 + (1 - this.screen.z / mostDistant) * .8);
 
 			for (var i = 0; i < this.links.length; ++i) {
 				ctx.moveTo(this.screen.x, this.screen.y);
@@ -182,7 +183,8 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 		}
 		Connection.rootStep = function () {
 			this.setScreen();
-			this.screen.color = opts.rootColor.replace('light', 30 + ((tick * this.glowSpeed) % 30)).replace('alp', (1 - this.screen.z / mostDistant) * .8);
+			var glowIntensity = 50 + 30 * (0.5 + 0.5 * Math.sin(tick * this.glowSpeed));
+			this.screen.color = opts.rootColor.replace('light', glowIntensity).replace('alp', (1 - this.screen.z / mostDistant) * .8);
 
 			for (var i = 0; i < this.links.length; ++i) {
 				ctx.moveTo(this.screen.x, this.screen.y);
@@ -223,21 +225,29 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 		}
 		Data.prototype.step = function () {
 
-			this.proportion += this.speed;
+			var currentConnectionSize = this.os + this.ds * this.proportion;
+			var journeyProgress = Math.max(0, Math.min(1, (currentConnectionSize - opts.minSize) / (opts.baseSize - opts.minSize)));
+
+			this.proportion += this.speed * journeyProgress;
 
 			if (this.proportion < 1) {
 				this.x = this.ox + this.dx * this.proportion;
 				this.y = this.oy + this.dy * this.proportion;
 				this.z = this.oz + this.dz * this.proportion;
-				this.size = (this.os + this.ds * this.proportion) * opts.dataToConnectionSize;
-			} else
+			} else {
 				this.setConnection(this.nextConnection);
+			}
+
+			this.size = currentConnectionSize * opts.dataToConnectionSize;
 
 			this.screen.lastX = this.screen.x;
 			this.screen.lastY = this.screen.y;
 			this.setScreen();
-			this.screen.color = opts.dataColor.replace('light', 40 + ((tick * this.glowSpeed) % 50)).replace('alp', .2 + (1 - this.screen.z / mostDistant) * .6);
 
+			var perspectiveAlpha = (1 - this.screen.z / mostDistant);
+			var finalAlpha = Math.max(0, journeyProgress * perspectiveAlpha * 0.8 + 0.2);
+			var glowIntensity = 60 + 40 * (0.5 + 0.5 * Math.sin(tick * this.glowSpeed));
+			this.screen.color = opts.dataColor.replace('light', glowIntensity).replace('alp', finalAlpha.toFixed(3));
 		}
 		Data.prototype.draw = function () {
 			if (this.ended)
@@ -286,6 +296,10 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 				this.ds = this.ns - this.os;
 
 				this.proportion = 0;
+
+				this.size = this.os * opts.dataToConnectionSize;
+				this.screen = {};
+				this.setScreen();
 			}
 		}
 		Connection.prototype.setScreen = Data.prototype.setScreen = function () {
@@ -323,9 +337,9 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 			return x * x + y * y + z * z;
 		}
 
-                function anim() {
+		function anim() {
 
-                        animationFrameId = window.requestAnimationFrame(anim);
+			animationFrameId = window.requestAnimationFrame(anim);
 
 			ctx.globalCompositeOperation = 'source-over';
 			ctx.fillStyle = opts.repaintColor;
@@ -366,27 +380,27 @@ const performCanvasManipulations = (canvasRef, hightCenter = 0.40, widthCenter =
 		}
 
 
-                const handleResize = function () {
+		const handleResize = function () {
 
-                        opts.vanishPoint.x = (w = c.width = window.innerWidth) / 2;
-                        opts.vanishPoint.y = (h = c.height = window.innerHeight) / 2;
-                        ctx.fillRect(0, 0, w, h);
-                };
-                window.addEventListener('resize', handleResize);
-                window.addEventListener('click', init);
+			opts.vanishPoint.x = (w = c.width = window.innerWidth) / 2;
+			opts.vanishPoint.y = (h = c.height = window.innerHeight) / 2;
+			ctx.fillRect(0, 0, w, h);
+		};
+		window.addEventListener('resize', handleResize);
+		window.addEventListener('click', init);
 
-                return {
-                        cleanup: () => {
-                                window.removeEventListener('resize', handleResize);
-                                window.removeEventListener('click', init);
-                                if (animationFrameId) {
-                                        cancelAnimationFrame(animationFrameId);
-                                        animationFrameId = null;
-                                }
-                                animating = false;
-                        }
-                };
-        }
+		return {
+			cleanup: () => {
+				window.removeEventListener('resize', handleResize);
+				window.removeEventListener('click', init);
+				if (animationFrameId) {
+					cancelAnimationFrame(animationFrameId);
+					animationFrameId = null;
+				}
+				animating = false;
+			}
+		};
+	}
 };
 
 export { performCanvasManipulations };
