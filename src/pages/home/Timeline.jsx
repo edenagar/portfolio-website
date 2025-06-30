@@ -47,19 +47,35 @@ const HorizontalTimeline = () => {
   return (
     <Box
       sx={{
-        pt: { xs: 4, md: 8 },
-        pb: 6,
+        pt: { xs: 6, md: 10 },
+        pb: 8,
+        maxWidth: '980px',
+        mx: 'auto',
       }}
     >
       {experience.map((section, sectionIndex) => (
-        <React.Fragment key={sectionIndex}>
-          <Typography variant="h5" sx={{ color: 'white', mb: 2, mt: sectionIndex > 0 ? 4 : 0 }}>
+        <Box key={sectionIndex} sx={{ mb: sectionIndex < experience.length - 1 ? 6 : 0 }}>
+          <Typography
+            variant="h3"
+            component="h2"
+            sx={{
+              color: 'white',
+              mb: 4,
+              mt: sectionIndex > 0 ? 6 : 0,
+              fontWeight: 600,
+            }}
+          >
             {section.category}
           </Typography>
           <Timeline
             sx={(theme) => ({
               position: 'left',
-              [theme.breakpoints.down('sm')]: { position: 'left', flex: 0, padding: 0 },
+              [theme.breakpoints.down('sm')]: {
+                position: 'left',
+                flex: 0,
+                padding: 0,
+                marginLeft: theme.spacing(-2),
+              },
               [`& .${timelineItemClasses.root}:before`]: {
                 flex: 0,
                 padding: 0
@@ -72,11 +88,45 @@ const HorizontalTimeline = () => {
                   <TimelineDot variant="outlined" color="primary" />
                   {index !== section.items.length - 1 && <TimelineConnector />}
                 </TimelineSeparator>
-                <TimelineContent>
-                  <Typography variant="body2" sx={{ color: 'white' }}>{item.years}</Typography>
-                  <Typography sx={{ color: 'white' }}>{item.title}</Typography>
+                <TimelineContent sx={{ pb: 3 }}>
+                  <Typography
+                    variant="caption"
+                    component="p"
+                    sx={{
+                      color: 'white',
+                      opacity: 0.7,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      fontWeight: 500,
+                      mb: 1,
+                    }}
+                  >
+                    {item.years}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    component="h3"
+                    sx={{
+                      color: 'white',
+                      fontWeight: 500,
+                      mb: item.details ? 1 : 0,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
                   {item.details && (
-                    <Typography variant="body2" sx={{ color: 'white', opacity: 0.8 }}>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      sx={{
+                        color: 'white',
+                        opacity: 0.8,
+                        lineHeight: 1.5,
+                        maxWidth: '600px',
+                        whiteSpace: 'pre-line',
+                      }}
+                    >
                       {item.details}
                     </Typography>
                   )}
@@ -84,7 +134,7 @@ const HorizontalTimeline = () => {
               </TimelineItem>
             ))}
           </Timeline>
-        </React.Fragment>
+        </Box>
       ))}
     </Box>
   );

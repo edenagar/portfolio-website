@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import Introduction from './Introduction';
@@ -54,22 +55,32 @@ const Home = () => {
           opacity: isSmallScreen ? 0.5 : 0.8,
         }}
       />
-      <Container
-        maxWidth="lg"
+      <Box
+        component="main"
         sx={{
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
-        <Grid container spacing={4}>
-          <Grid item xs={12}>
-            <Introduction />
+        <Container
+          maxWidth="lg"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}
+        >
+          <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <Introduction />
+            </Grid>
+            <Grid item xs={12}>
+              <Timeline />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Timeline />
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </Box>
     </>
   );
 };
