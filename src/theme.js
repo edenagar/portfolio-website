@@ -111,6 +111,15 @@ const theme = createTheme({
 
     // Component overrides for consistent spacing and max-width
     components: {
+        // Global background styles
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    backgroundColor: '#111', // Dark background
+                    minHeight: '100vh',
+                },
+            },
+        },
         MuiContainer: {
             styleOverrides: {
                 root: {

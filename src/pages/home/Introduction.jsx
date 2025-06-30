@@ -36,7 +36,7 @@ const Introduction = () => {
   return (
     <Box
       sx={{
-        pt: { xs: 8, md: 12 }, // Increased padding using 8px grid
+        pt: { xs: 16, md: 20 }, // Increased padding to account for fixed navbar (64px + extra space)
         pb: { xs: 16, md: 8 },
         textAlign: { xs: 'center', md: 'left' },
         color: 'white',
