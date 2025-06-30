@@ -44,9 +44,9 @@ const Navbar = () => {
   return (
     <AppBar
       sx={{
-        backgroundColor: 'rgba(17, 17, 17, 0.95)', // Consistent dark background
-        backdropFilter: 'blur(10px)',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        backgroundColor: 'transparent', // Made navbar background transparent
+        backdropFilter: 'none', // Removed backdrop filter
+        boxShadow: 'none', // Removed box shadow
         position: 'fixed',
         top: 0,
         zIndex: 1100,
